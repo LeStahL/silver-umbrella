@@ -30,9 +30,11 @@ void CALLBACK inputCallback(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD 
         if(b4 == 0x90) // NOTE_ON
         {
             // Determine a synth that is not playing
-            int nPlaying = 0;
-            for(; nPlaying<4; ++nPlaying)
-                if(!playing[nPlaying]) break;
+            int nPlaying;
+            for(nPlaying = 0; nPlaying < 4; ++nPlaying)
+                if(playing[nPlaying] == 0) break;
+            if(nPlaying == 4) return;
+            printf("on nplaying: %d\n", nPlaying);
             midiOutShortMsg(outputDevices[nPlaying], dwParam1);
             playing[nPlaying] = 1;
             notes[nPlaying] = b3;
@@ -40,11 +42,14 @@ void CALLBACK inputCallback(HMIDIIN hMidiIn, UINT wMsg, DWORD dwInstance, DWORD 
         else if(b4 == 0x80) // NOTE_OFF
         {
             // Determine which synth plays that note
-            int nPlaying = 0;
-            for(; nPlaying<4; ++nPlaying)
-                if(notes[nPlaying] == b3)break;
+            int nPlaying;
+            for(nPlaying = 0; nPlaying < 4; ++nPlaying)
+                if(notes[nPlaying] == b3) break;
+            if(nPlaying == 4) return;
+            printf("off nplaying: %d\n", nPlaying);
             midiOutShortMsg(outputDevices[nPlaying], dwParam1);
             playing[nPlaying] = 0;
+            notes[nPlaying] = b3;
         }
     }
     
@@ -87,13 +92,13 @@ int WINAPI demo(HINSTANCE hInstance, HINSTANCE hPrevInstance, PWSTR pCmdLine, in
             printf("%s\n", capabilities.szPname);
             
             if(!strcmp(capabilities.szPname, "MIDISPORT 4x4 Anniv"))
-                midiOutOpen(&outputDevices[0], i, 0, 0, CALLBACK_NULL);
-            else if(!strcmp(capabilities.szPname, "MIDIOUT2 (MIDISPORT 4x4 Anniv)"))
-                midiOutOpen(&outputDevices[1], i, 0, 0, CALLBACK_NULL);
-            else if(!strcmp(capabilities.szPname, "MIDIOUT3 (MIDISPORT 4x4 Anniv)"))
-                midiOutOpen(&outputDevices[2], i, 0, 0, CALLBACK_NULL);
-            else if(!strcmp(capabilities.szPname, "MIDIOUT4 (MIDISPORT 4x4 Anniv)"))
-                midiOutOpen(&outputDevices[3], i, 0, 0, CALLBACK_NULL);
+                midiOutOpen(&(outputDevices[0]), i, 0, 0, CALLBACK_NULL);
+            if(!strcmp(capabilities.szPname, "MIDIOUT2 (MIDISPORT 4x4 Anniv)"))
+                midiOutOpen(&(outputDevices[1]), i, 0, 0, CALLBACK_NULL);
+            if(!strcmp(capabilities.szPname, "MIDIOUT3 (MIDISPORT 4x4 Anniv)"))
+                midiOutOpen(&(outputDevices[2]), i, 0, 0, CALLBACK_NULL);
+            if(!strcmp(capabilities.szPname, "MIDIOUT4 (MIDISPORT 4x4 Anniv)"))
+                midiOutOpen(&(outputDevices[3]), i, 0, 0, CALLBACK_NULL);
         }
     }
     
