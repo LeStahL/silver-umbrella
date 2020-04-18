@@ -1,5 +1,7 @@
 build
 *.kdev4
+.vscode
+GIT_REVISION_HASH
 
 # Prerequisites
 *.d
