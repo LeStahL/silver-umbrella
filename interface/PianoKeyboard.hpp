@@ -1,19 +1,22 @@
 #pragma once
 
+#include <QList>
+
 #include "Controller.hpp"
+#include "PianoKey.hpp"
+#include "PianoKeyboardGraphicsItem.hpp"
+#include "PianoKeyGraphicsItem.hpp"
 
 class PianoKeyboard
 {
     public:
     PianoKeyboard(int lowerKeyLimit, int upperKeyLimit, Controller *assignedController = nullptr);
+
+    int nKeys();
+
+    int lowerKeyLimit,
+        upperKeyLimit;
+    QList<PianoKey *> keys;
+
 };
 
-class PianoKeyboardGraphicsItem : public QGraphicsItem
-{
-    public:
-    PianoKeyboardGraphicsItem(QGraphicsItem *parent = nullptr, PianoKeyboard *pianoKeyboard);
-    QRectF boundingRegion() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
-    PianoKeyboard *pianoKeyboard;
-};

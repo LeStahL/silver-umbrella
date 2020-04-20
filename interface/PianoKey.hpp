@@ -3,7 +3,7 @@
 #include <QGraphicsItem>
 
 #include "PianoKeyboard.hpp"
-#include "Synthesizer.hpp"
+#include "Controller.hpp"
 
 class PianoKey
 {
@@ -14,15 +14,5 @@ class PianoKey
     bool on;
     PianoKeyboard *keyboard;
     QGraphicsItem *graphicsItem;
-    Synthesizer *assignedSynthesizer;
-};
-
-class PianoKeyGraphicsItem : public QGraphicsItem
-{
-    public:
-    PianoKeyGraphicsItem(QGraphicsItem *parent = nullptr, PianoKey *pianoKey);
-    QRectF boundingRegion() const override;
-    void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) override;
-
-    PianoKey *pianoKey;
+    Controller *assignedController;
 };
