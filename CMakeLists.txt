@@ -13,9 +13,12 @@ set(${PROJECT_NAME}_SOURCES
     Entry.cpp
     MainWindow.cpp
     MainWindow.ui
+
+    controllers/MidiMessage.cpp
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
+target_include_directories(${PROJECT_NAME} PRIVATE controllers)
 
 file(TOUCH "${PROJECT_BINARY_DIR}/GIT_REVISION_HASH")
 if(${GIT_FOUND})
