@@ -38,3 +38,9 @@ if(WIN32)
     message("Binary is in: $<TARGET_FILE_DIR:${PROJECT_NAME}>")
     add_custom_command(TARGET ${PROJECT_NAME} COMMAND ${WINDEPLOYQT_EXECUTABLE} "$<TARGET_FILE:${PROJECT_NAME}>")
 endif()
+
+add_executable(${PROJECT_NAME}-OLD main.c)
+
+set_target_properties(${PROJECT_NAME}-OLD PROPERTIES LINK_FLAGS "/ENTRY:demo /SUBSYSTEM:Windows /OPT:REF /OPT:ICF=10 /VERBOSE /NODEFAULTLIB")
+target_compile_options(${PROJECT_NAME}-OLD PRIVATE /Gy /O1 /fp:fast /GR- /GS- /MT )
+target_link_libraries(${PROJECT_NAME}-OLD Winmm.lib  User32.lib Winmm.lib ucrt.lib msvcrt.lib)
