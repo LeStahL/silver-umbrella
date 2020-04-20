@@ -17,6 +17,7 @@ set(${PROJECT_NAME}_SOURCES
     controllers/MidiMessage.cpp
     controllers/Controller.cpp
     controllers/InputController.cpp
+    controllers/OutputController.cpp
 )
 
 add_executable(${PROJECT_NAME} ${${PROJECT_NAME}_SOURCES})
