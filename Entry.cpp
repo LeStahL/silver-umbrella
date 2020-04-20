@@ -6,6 +6,7 @@
 #include "MIDIMessage.hpp"
 #include "InputController.hpp"
 #include "OutputController.hpp"
+#include "build.hpp"
 
 int main(int argc, char **args)
 {
@@ -13,6 +14,7 @@ int main(int argc, char **args)
     
     MainWindow *mainWindow = new MainWindow(application, nullptr);
     mainWindow->show();
+    mainWindow->setWindowTitle(QString("Silver Umbrella - Revision ") + revisionHash);
     
     // Outputs
     QList<OutputController *> outputControllers;
